@@ -15,27 +15,32 @@ public class Week14Topics {
 
 	// An enumerated data type
 	private enum enumIceCream  {vanilla, chocolate, strawberry, coffee};
+	static long endTime, startTime ;
 	
 	public static void main(String[] arg) {
 		
-		// A classic recursion example: the factorial calculation.
+//		------------------------------------------------------------		
+//		A classic recursion example: the factorial calculation.
 		System.out.println("Factorial(10) = " + factorial(10));
-		
-		
-		// An enumerated data type is used to declare a variable
+//		------------------------------------------------------------		
+
+//		------------------------------------------------------------				
+//		An enumerated data type is used to declare a variable
+//		------------------------------------------------------------		
 		enumIceCream myIceCream;
 		myIceCream = enumIceCream.coffee;		// OK		
 //		myIceCream = 42;						// Not OK
 		System.out.println("My Ice Cream = " + myIceCream);
 		
-		long startTime = System.currentTimeMillis();
+		
+//		----------------------------------------------------------------------------------------------------------------------------		
+//		Test the efficiency of our prime number checkers. 
+//		We will count the number of primes from each algorithm as a sanity check. The counts should be the same.
+//		----------------------------------------------------------------------------------------------------------------------------		
+		startTime = System.currentTimeMillis();
 		int countOfPrimes = 0;
-		
-//		----------------------------------------------------------------------------------------------------------------------------		
-//		Test the efficiency of our prime number checkers. We will count the number of primes from each algorithm as a sanity check.
 		int numOfIntegersToCheck = 100000;
-//		----------------------------------------------------------------------------------------------------------------------------		
-		
+/*
 		for (int i = 2; i < numOfIntegersToCheck; i++) {
 		  if (isPrime(i)){ countOfPrimes++;}
 		}
@@ -51,7 +56,23 @@ public class Week14Topics {
 		endTime = System.currentTimeMillis();
 		System.out.println(countOfPrimes + " prime numbers identified with the optimized method");
 		System.out.println("Total execution time of optimized prime number tester: " + ((double)(endTime - startTime))/1000 + " seconds.");
-
+*/
+//		-----------------------------------------------------------------------------------------------------------------------------
+//		Test our unoptimized max value finder
+//		-----------------------------------------------------------------------------------------------------------------------------
+		int[] myList = new int[100000000];
+			for (int i = 0; i < myList.length; i++) {
+				myList[i] = i;
+		}
+		startTime = System.currentTimeMillis();
+		// Run it a bunch of times because it's fast
+		int max = 0;
+		for (int j = 0; j < 100; j++) {
+			max = findMaxValue(myList);
+		}
+		endTime = System.currentTimeMillis();
+		System.out.println("Max value in array = " + max );
+		System.out.println("Total execution time of un-optimized max finder: " + ((double)(endTime - startTime))/1000 + " seconds.");
 		
 		
 	}
@@ -91,6 +112,19 @@ public class Week14Topics {
 			if (num % i == 0) {result = false; break;}
 		}
 		return result;
+	}
+	
+	/***
+	 * Unoptimized.
+	 * @param list The array of ints to search
+	 * @return The max value in list
+	 */
+	public static int findMaxValue(int[] list) {
+		int max = Integer.MIN_VALUE;
+		for (int i = 0; i < list.length; i++) {
+			if (max < list[i]) max = list[i];
+		}
+		return max;
 	}
 	
 }
